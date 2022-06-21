@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import conectarDB from './config/db.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
+import sistemaRoutes from './routes/sistemaRoutes.js';
 
 
 // crear el servidor
@@ -18,6 +19,7 @@ conectarDB();
 
 // routing
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/sistemas', sistemaRoutes);
 
 // puerto de la app
 const PORT = process.env.PORT || 4000;

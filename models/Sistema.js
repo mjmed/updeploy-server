@@ -25,17 +25,21 @@ const SistemasSchema = mongoose.Schema({
     },
     usuarioModificacion: {
         type: String,
-        trim: true
+        trim: true,
+        default: null
     },
     fechaModificacion: {
-        type: Date
+        type: Date,
+        default: null
     },
     usuarioBaja: {
         type: String,
-        trim: true
+        trim: true,
+        default: null
     },
     fechaBaja: {
-        type: Date
+        type: Date,
+        default: null
     },
 });
 
