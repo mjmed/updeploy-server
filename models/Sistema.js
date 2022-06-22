@@ -4,8 +4,7 @@ const SistemasSchema = mongoose.Schema({
     codigo: {
         type: String,
         required: true,
-        trim: true,
-        unique: true
+        trim: true
     },
     descripcion: {
         type: String,
