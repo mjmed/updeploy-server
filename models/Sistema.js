@@ -4,12 +4,17 @@ const SistemasSchema = mongoose.Schema({
     codigo: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        uppercase: true,
     },
     descripcion: {
         type: String,
         required: true,
         trim: true
+    },
+    orden: {
+        type: Number,
+        default: 0,
     },
     activo: {
         type: Boolean,
