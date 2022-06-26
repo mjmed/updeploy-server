@@ -2,22 +2,20 @@ import Usuario from '../models/Usuario.js';
 import generarId from '../helpers/generarId.js';
 import generarJWT from '../helpers/generarJWT.js';
 
-const usuarios = (req, res) => {
-    res.json({msg: 'Listando usuarios'})
-};
 
 const crearUsuario = async (req, res) => {
 
-    // evita registros duplicados
     const { email, username } = req.body;
+    
+    // verifica que ya no exista ese email
     const existeEmail = await Usuario.findOne({ email });
-    const existeUsername = await Usuario.findOne({ username });
-
     if (existeEmail) {
         const error = new Error('Ya existe un usuario con ese email');
         return res.status(400).json({ msg: error.message });
     }
 
+    // verifica que ya no exista ese username
+    const existeUsername = await Usuario.findOne({ username });
     if (existeUsername) {
         const error = new Error('Ya existe un usuario con ese username');
         return res.status(400).json({ msg: error.message });
@@ -26,14 +24,24 @@ const crearUsuario = async (req, res) => {
     try {
 
         const usuario = new Usuario(req.body);
+
         usuario.token = generarId();
         usuario.fechaAlta = Date.now();
+
         const usuarioAlmacenado = await usuario.save();
 
-        res.json(usuarioAlmacenado);
+        res.status(201).json({
+            _id: usuarioAlmacenado._id,
+            username: usuarioAlmacenado.username,
+            password: usuarioAlmacenado.password,
+            nombre: usuarioAlmacenado.nombre,
+            apellido: usuarioAlmacenado.apellido,
+            email: usuarioAlmacenado.email
+        });
         
     } catch (error) {
         console.log(error);
+        res.status(500).send('Error en el servidor');
     }
 };
 
@@ -72,6 +80,7 @@ const autenticar = async (req, res) => {
     }
 }
 
+// devuelve los datos del usuario logueado
 const perfil = async (req, res) => {
     const { usuario } = req;
 
@@ -80,7 +89,6 @@ const perfil = async (req, res) => {
 
 
 export {
-    usuarios,
     crearUsuario,
     autenticar,
     perfil
