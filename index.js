@@ -27,6 +27,9 @@ const options = {
         servers: [
             {
                 url: `http://localhost:${PORT}`
+            },
+            {
+                url: 'https://api-up-deploy.herokuapp.com'
             }
         ],
     },
